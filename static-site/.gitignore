@@ -12,9 +12,14 @@
 # next.js
 /.next/
 /out/
+/public/
+
 
 # production
 /build
+node_modules
+.next
+
 
 # misc
 .DS_Store
