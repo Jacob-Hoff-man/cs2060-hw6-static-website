@@ -37,5 +37,3 @@ jobs:
 
       - uses: 'google-github-actions/setup-gcloud@v1'
       - run: gsutil -m rsync -r -d out gs://agendar-staging
-
-
