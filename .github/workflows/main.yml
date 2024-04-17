@@ -32,7 +32,7 @@ jobs:
       - uses: 'google-github-actions/auth@v2'
         with:
           workload_identity_provider: 'projects/939144647133/locations/global/workloadIdentityPools/github/providers/my-repo'
-          service_account: '881657211299-compute@developer.gserviceaccount.com'
+          service_account: 'my-service-account@sylvan-client-411600.iam.gserviceaccount.com'
 
       # upload files to GCS
       - id: 'upload-static-files'
