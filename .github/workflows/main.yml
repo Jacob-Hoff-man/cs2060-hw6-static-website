@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: '20.x'
           cache: 'yarn'
-          cache-dependency-path: 'ui/yarn.lock'
+          cache-dependency-path: 'static-site/yarn.lock'
       - run: cd static-site
       - run: yarn --frozen-lockfile --production=false # we need dev dependencies for building
       - run: mv .env.staging .env.production # a hack for having staging in NextJS
