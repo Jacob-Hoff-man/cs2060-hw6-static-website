@@ -1,3 +1,52 @@
+name: Staging release
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+jobs:
+  ui-release:
+    runs-on: ubuntu-latest
+
+    env:
+      NODE_ENV: production # Next.js allows development, test, production - no staging!
+
+    permissions: # required by google-github-actions/auth
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+          cache: 'yarn'
+          cache-dependency-path: 'ui/yarn.lock'
+      - run: yarn --frozen-lockfile --production=false # we need dev dependencies for building
+      - run: mv .env.staging .env.production # a hack for having staging in NextJS
+      - run: yarn run build
+
+      - uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: 'projects/939144647133/locations/global/workloadIdentityPools/github/providers/my-repo'
+          service_account: '881657211299-compute@developer.gserviceaccount.com'
+
+      - uses: 'google-github-actions/setup-gcloud@v1'
+      - run: gsutil -m rsync -r -d out gs://agendar-staging
+
+
+
+
+
+
+
+
+
+
+
 name: Deploy to Google Cloud Storage
 
 on:
