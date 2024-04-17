@@ -20,14 +20,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@latest
         with:
           node-version: '20.x'
           cache: 'yarn'
           cache-dependency-path: 'static-site/yarn.lock'
       - run: cd static-site
       - run: yarn --frozen-lockfile --production=false # we need dev dependencies for building
-      - run: mv .env.staging .env.production # a hack for having staging in NextJS
       - run: yarn run build
 
       - uses: 'google-github-actions/auth@v1'
@@ -36,6 +35,6 @@ jobs:
           service_account: '881657211299-compute@developer.gserviceaccount.com'
 
       - uses: 'google-github-actions/setup-gcloud@v1'
-      - run: gsutil -m rsync -r -d out gs://agendar-staging
+      - run: gsutil -m rsync -r -d out gs:///
       - run: gsutil cp ./out/. gs:///
 
