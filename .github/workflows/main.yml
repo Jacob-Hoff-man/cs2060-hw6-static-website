@@ -25,7 +25,6 @@ jobs:
           node-version: '20.x'
           cache: 'yarn'
           cache-dependency-path: 'yarn.lock'
-      - run: ls
       - run: yarn --frozen-lockfile --production=false # we need dev dependencies for building
       - run: yarn run build
 
