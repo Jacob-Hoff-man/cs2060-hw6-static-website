@@ -7,11 +7,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  ui-release:
+  static-gcp-upload:
     runs-on: ubuntu-latest
 
     env:
-      NODE_ENV: development
+      NODE_ENV: production
 
     permissions:
       contents: read
