@@ -1,4 +1,4 @@
-name: Staging release
+name: Development release
 
 on:
   push:
@@ -11,21 +11,20 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      NODE_ENV: production # Next.js allows development, test, production - no staging!
+      NODE_ENV: development
 
-    permissions: # required by google-github-actions/auth
+    permissions:
       contents: read
       id-token: write
 
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
           cache: 'yarn'
           cache-dependency-path: 'yarn.lock'
-      - run: yarn --frozen-lockfile --production=false # we need dev dependencies for building
+      - run: yarn --frozen-lockfile --production=false
       - run: yarn run build
 
       - uses: 'google-github-actions/auth@v2'
